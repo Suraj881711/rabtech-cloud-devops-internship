@@ -1,0 +1,31 @@
+services:
+  web:
+    build: .
+    image: rabtech-cloud-devops-internship:latest
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://app:app_password@db:5432/appdb
+      PORT: "8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: app_password
+      POSTGRES_DB: appdb
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U app -d appdb"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+volumes:
+  pgdata:

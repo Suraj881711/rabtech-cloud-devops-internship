@@ -60,5 +60,5 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}:latest
-            ghcr.io/${{ github.repository }}:${{ github.sha }}
+            ghcr.io/suraj881711/rabtech-cloud-devops-internship:latest
+            ghcr.io/suraj881711/rabtech-cloud-devops-internship:${{ github.sha }}
